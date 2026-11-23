@@ -126,9 +126,9 @@ export function Home() {
           <BlobShape className="w-[400px] h-[400px] bg-mint/50 top-1/3 right-1/4 blur-3xl" style={{ animationDelay: '4s' }} />
         </div>
 
-        <h1 className="text-[5rem] md:text-[8rem] leading-tight font-heading text-navy mb-8 text-center max-w-5xl mx-auto leading-[0.85]">
-          {['Streaming', 'for', "your", "dog's", 'nose.'].map((word, i) => (
-            <span key={i} className={`hero-word block ${i === 4 ? 'text-golden' : ''}`}>
+        <h1 className="text-[3.5rem] md:text-[5rem] leading-tight font-heading text-navy mb-8 text-center max-w-[700px] mx-auto leading-[1.05]">
+          {['Streaming for', "your dog's", 'nose.'].map((word, i) => (
+            <span key={i} className={`hero-word block ${i === 2 ? 'text-golden' : ''}`}>
               {word}
             </span>
           ))}
@@ -146,6 +146,10 @@ export function Home() {
           <Button variant="outline" size="lg" asChild>
             <Link to="/cart">View Cart</Link>
           </Button>
+        </div>
+
+        <div className="absolute right-[-8%] top-[-6%] w-[360px] h-[360px] z-0 pointer-events-none rotate-3 opacity-80">
+          <BrunoImage variant="happy" className="w-full h-full object-cover" />
         </div>
       </section>
 

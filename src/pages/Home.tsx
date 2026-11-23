@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,46 +11,40 @@ import { SectionHeader } from '../components/SectionHeader';
 import { BlobShape } from '../components/BlobShape';
 import { WavyDivider } from '../components/WavyDivider';
 import { StickerBadge } from '../components/StickerBadge';
-gsap.registerPlugin(ScrollTrigger);
-
-const scenes = [
-  {
-    variant: 'door' as const,
-    time: '9:00',
-    title: 'Morning walk',
-    text: 'The day begins with a calm lavender burst.',
-  },
-  {
-    variant: 'jump' as const,
-    time: '10:30',
-    title: 'Play time',
-    text: 'Scent bursts spark curiosity and joy.',
-  },
-  {
-    variant: 'sleep' as const,
-    time: '13:00',
-    title: 'Nap time',
-    text: 'Chamomile dusk helps breathing slow.',
-  },
-  {
-    variant: 'door' as const,
-    time: '15:30',
-    title: 'Door sadness',
-    text: 'Waiting by the door, missing you.',
-  },
-  {
-    variant: 'sniff' as const,
-    time: '17:00',
-    title: 'Sniff joy',
-    text: 'Snuffle mat treasures found.',
-  },
-];
 
 export function Home() {
-  const storyRef = useRef<HTMLDivElement>(null);
-  const chapterRefs = scenes.map(() => useRef<HTMLDivElement>(null));
-  const brunoRefs = scenes.map(() => useRef<HTMLImageElement>(null));
-  const textRefs = scenes.map(() => useRef<HTMLDivElement>(null));
+  const scenes = [
+    {
+      variant: 'door' as const,
+      time: '9:00',
+      title: 'Morning walk',
+      text: 'The day begins with a calm lavender burst.',
+    },
+    {
+      variant: 'jump' as const,
+      time: '10:30',
+      title: 'Play time',
+      text: 'Scent bursts spark curiosity and joy.',
+    },
+    {
+      variant: 'sleep' as const,
+      time: '13:00',
+      title: 'Nap time',
+      text: 'Chamomile dusk helps breathing slow.',
+    },
+    {
+      variant: 'door' as const,
+      time: '15:30',
+      title: 'Door sadness',
+      text: 'Waiting by the door, missing you.',
+    },
+    {
+      variant: 'sniff' as const,
+      time: '17:00',
+      title: 'Sniff joy',
+      text: 'Snuffle mat treasures found.',
+    },
+  ];
 
   useEffect(() => {
     gsap.from('.hero-word', {
@@ -67,53 +61,8 @@ export function Home() {
       duration: 0.8,
       ease: 'power2.out',
     });
-
-    if (!storyRef.current) return;
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: storyRef.current,
-        start: 'top top',
-        end: '+=400%',
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
-    tl.to(chapterRefs[0].current, { opacity: 1, duration: 0.01 });
-    tl.fromTo(
-      brunoRefs[0].current,
-      { x: -80, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.5 }
-    );
-    tl.fromTo(
-      textRefs[0].current,
-      { x: 80, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.5 },
-      '-=0.4'
-    );
-
-    scenes.forEach((_, i) => {
-      if (i === scenes.length - 1) return;
-      const next = i + 1;
-      tl.to(chapterRefs[i].current, { opacity: 0, duration: 0.35 }, `scene${next}`);
-      tl.to(chapterRefs[next].current, { opacity: 1, duration: 0.35 }, `scene${next}`);
-      tl.fromTo(
-        brunoRefs[next].current,
-        { x: -80, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.5 },
-        `scene${next}`
-      );
-      tl.fromTo(
-        textRefs[next].current,
-        { x: 80, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.5 },
-        `scene${next}-=0.3`
-      );
-    });
-
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
-
   return (
     <div className="min-h-screen relative overflow-hidden">
       <Navbar />
@@ -194,30 +143,24 @@ export function Home() {
       <section className="py-24 px-4 bg-lavender/30">
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="Bruno's Day" subtitle="Follow Bruno through his daily scent adventures." />
-          <div className="relative h-[600vh]" ref={storyRef}>
-            {scenes.map((scene, i) => (
+          <div className="space-y-16">
+            {scenes.map((scene) => (
               <div
                 key={scene.title}
-                ref={chapterRefs[i]}
-                className={`chapter absolute inset-0 z-10 flex items-center justify-center px-8 opacity-0 transition-opacity duration-300 ${
-                  i === 0 ? 'opacity-1' : ''
-                }`}
+                className="flex items-center gap-10 w-full max-w-[900px] mx-auto"
               >
-                <div className="flex items-center gap-10 w-full max-w-[900px]">
-                  <div className="relative w-[320px] h-[320px] shrink-0 overflow-hidden rounded-3xl border-4 border-navy shadow-2xl bg-white">
-                    <BrunoImage
-                      variant={scene.variant}
-                      ref={brunoRefs[i]}
-                      className="w-full h-full object-cover"
-                    />
+                <div className="relative w-[320px] h-[320px] shrink-0 overflow-hidden rounded-3xl border-4 border-navy shadow-2xl bg-white">
+                  <BrunoImage
+                    variant={scene.variant}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="text-blurb">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur border border-golden mb-4">
+                    <span className="text-[10px] font-bold text-golden uppercase tracking-wider">{scene.time}</span>
                   </div>
-                  <div className="text-blurb" ref={textRefs[i]}>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur border border-golden mb-4">
-                      <span className="text-[10px] font-bold text-golden uppercase tracking-wider">{scene.time}</span>
-                    </div>
-                    <h2 className="text-3xl md:text-4xl font-heading text-navy leading-tight mb-3">{scene.title}</h2>
-                    <p className="text-lg text-navy/80 font-body">{scene.text}</p>
-                  </div>
+                  <h2 className="text-3xl md:text-4xl font-heading text-navy leading-tight mb-3">{scene.title}</h2>
+                  <p className="text-lg text-navy/80 font-body">{scene.text}</p>
                 </div>
               </div>
             ))}

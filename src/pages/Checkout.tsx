@@ -20,8 +20,10 @@ export function CheckoutPage() {
     e.preventDefault();
     setPaymentStage('processing');
     setTimeout(() => {
-      setPaymentStage('success');
+      const order = { items: [...items], total, date: new Date().toISOString() };
+      localStorage.setItem('scentflix-last-order', JSON.stringify(order));
       clearCart();
+      navigate('/confirmation');
     }, 2000);
   };
 
@@ -122,21 +124,6 @@ export function CheckoutPage() {
             <div className="w-20 h-20 border-8 border-golden border-t-transparent rounded-full animate-[spin_1s_linear_infinite] mb-6" />
             <h2 className="text-3xl font-heading text-navy">Processing your order...</h2>
             <p className="text-navy/70 font-body mt-4">Bruno's scents are on the way!</p>
-          </div>
-        )}
-
-        {paymentStage === 'success' && (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-24 h-24 bg-mint rounded-full flex items-center justify-center mb-8 animate-bounce">
-              <span className="text-6xl">✓</span>
-            </div>
-            <h2 className="text-4xl font-heading text-navy mb-4">Order Placed!</h2>
-            <p className="text-navy/70 font-body mb-8">
-              Thank you! Bruno will enjoy his new scent episodes.
-            </p>
-            <Button variant="primary" size="lg" onClick={() => navigate('/')}>
-              Continue Shopping
-            </Button>
           </div>
         )}
       </div>

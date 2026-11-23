@@ -11,11 +11,11 @@ export function BrunoImage({ variant, className = '', bob = false }: BrunoImageP
   const imgRef = useRef<HTMLImageElement>(null);
 
   const imageMap: Record<string, string> = {
-    door: '/images/bruno-door.jpg',
-    sniff: '/images/bruno-sniff.jpg',
-    happy: '/images/bruno-happy.jpg',
-    sleep: '/images/bruno-sleep.jpg',
-    jump: '/images/bruno-jump.jpg',
+    door: '/images/bruno-door.svg',
+    sniff: '/images/bruno-sniff.svg',
+    happy: '/images/bruno-happy.svg',
+    sleep: '/images/bruno-sleep.svg',
+    jump: '/images/bruno-jump.svg',
   };
 
   useEffect(() => {

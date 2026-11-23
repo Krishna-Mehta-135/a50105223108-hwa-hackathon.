@@ -28,7 +28,7 @@ const episodes: Episode[] = [
     name: 'Calm Evening',
     scent: 'Lavender & Chamomile',
     benefit: 'Supports calm during quiet evenings',
-    image: '/images/bruno-sleep.jpg',
+    image: '/images/bruno-sleep.webp',
     price: '₹799',
   },
   {
@@ -36,7 +36,7 @@ const episodes: Episode[] = [
     name: "Your Owner",
     scent: "Owner's scent pad",
     benefit: 'Comforting familiar scent when alone',
-    image: '/images/bruno-happy.jpg',
+    image: '/images/bruno-happy.webp',
     price: '₹799',
   },
   {
@@ -44,7 +44,7 @@ const episodes: Episode[] = [
     name: 'Snuffle Hunt',
     scent: 'Mint & Scent Swirl',
     benefit: 'Pairs with hidden treats in snuffle mat',
-    image: '/images/bruno-sniff.jpg',
+    image: '/images/bruno-sniff.webp',
     price: '₹799',
   },
   {
@@ -52,7 +52,7 @@ const episodes: Episode[] = [
     name: 'Play Burst',
     scent: 'Light citrus-free blend',
     benefit: 'Gentle energy for play time',
-    image: '/images/bruno-jump.jpg',
+    image: '/images/bruno-jump.webp',
     price: '₹799',
   },
 ];

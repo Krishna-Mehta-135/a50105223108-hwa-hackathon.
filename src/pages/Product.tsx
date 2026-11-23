@@ -23,7 +23,7 @@ const products: Product[] = [
     price: 2999,
     description:
       'Smart scent enrichment device that releases short, faint bursts of vet-formulated, dog-safe scents. Auto shut off, low concentration, small bursts.',
-    image: '/images/bruno-door.jpg',
+    image: '/images/bruno-door.webp',
     features: [
       'Vet formulated, dog-safe scents',
       'Low concentration, small bursts',
@@ -37,7 +37,7 @@ const products: Product[] = [
     name: 'Monthly Cartridge Subscription',
     price: 799,
     description: 'New scent episodes arrive monthly. Vet-formulated, dog-safe scents. Cancel anytime.',
-    image: '/images/bruno-sniff.jpg',
+    image: '/images/bruno-sniff.webp',
     features: [
       'New episodes every month',
       'Vet formulated and dog-safe',

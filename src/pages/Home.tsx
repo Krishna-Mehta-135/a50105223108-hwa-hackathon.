@@ -97,7 +97,7 @@ export function Home() {
           </Button>
         </div>
 
-        <div className="absolute right-[-4%] top-[-4%] w-[340px] h-[340px] z-0 pointer-events-none rotate-2 opacity-90 floating-bruno">
+        <div className="absolute right-[-2%] top-[8%] w-[360px] h-[360px] z-0 pointer-events-none rotate-2 opacity-95 floating-bruno">
           <div className="relative w-full h-full border-4 border-white shadow-2xl rounded-full overflow-hidden bg-white">
             <BrunoImage variant="happy" className="w-full h-full object-cover" />
           </div>

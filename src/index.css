@@ -77,6 +77,10 @@ h1, h2, h3, h4, h5, h6 {
   animation: float 6s ease-in-out infinite;
 }
 
+.floating-bruno {
+  animation: float 5s ease-in-out infinite;
+}
+
 .heading-reveal-word {
   opacity: 0;
   animation: word-reveal 0.8s ease-out forwards;

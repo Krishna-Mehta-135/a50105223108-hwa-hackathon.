@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -6,7 +6,6 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { BrunoImage } from '../components/BrunoImage';
 import { DoodleIcons } from '../components/DoodleIcons';
-import { PawCursor } from '../components/PawCursor';
 import { Button } from '../components/Button';
 import { SectionHeader } from '../components/SectionHeader';
 import { BlobShape } from '../components/BlobShape';
@@ -15,7 +14,45 @@ import { StickerBadge } from '../components/StickerBadge';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const scenes = [
+  {
+    variant: 'door' as const,
+    time: '9:00',
+    title: 'Morning walk',
+    text: 'The day begins with a calm lavender burst.',
+  },
+  {
+    variant: 'jump' as const,
+    time: '10:30',
+    title: 'Play time',
+    text: 'Scent bursts spark curiosity and joy.',
+  },
+  {
+    variant: 'sleep' as const,
+    time: '13:00',
+    title: 'Nap time',
+    text: 'Chamomile dusk helps breathing slow.',
+  },
+  {
+    variant: 'door' as const,
+    time: '15:30',
+    title: 'Door sadness',
+    text: 'Waiting by the door, missing you.',
+  },
+  {
+    variant: 'sniff' as const,
+    time: '17:00',
+    title: 'Sniff joy',
+    text: 'Snuffle mat treasures found.',
+  },
+];
+
 export function Home() {
+  const storyRef = useRef<HTMLDivElement>(null);
+  const chapterRefs = scenes.map(() => useRef<HTMLDivElement>(null));
+  const brunoRefs = scenes.map(() => useRef<HTMLImageElement>(null));
+  const textRefs = scenes.map(() => useRef<HTMLDivElement>(null));
+
   useEffect(() => {
     gsap.from('.hero-word', {
       y: 60,
@@ -31,13 +68,56 @@ export function Home() {
       duration: 0.8,
       ease: 'power2.out',
     });
+
+    if (!storyRef.current) return;
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: storyRef.current,
+        start: 'top top',
+        end: '+=400%',
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+    tl.to(chapterRefs[0].current, { opacity: 1, duration: 0.01 });
+    tl.fromTo(
+      brunoRefs[0].current,
+      { x: -80, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.5 }
+    );
+    tl.fromTo(
+      textRefs[0].current,
+      { x: 80, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.5 },
+      '-=0.4'
+    );
+
+    scenes.forEach((_, i) => {
+      if (i === scenes.length - 1) return;
+      const next = i + 1;
+      tl.to(chapterRefs[i].current, { opacity: 0, duration: 0.35 }, `scene${next}`);
+      tl.to(chapterRefs[next].current, { opacity: 1, duration: 0.35 }, `scene${next}`);
+      tl.fromTo(
+        brunoRefs[next].current,
+        { x: -80, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5 },
+        `scene${next}`
+      );
+      tl.fromTo(
+        textRefs[next].current,
+        { x: 80, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5 },
+        `scene${next}-=0.3`
+      );
+    });
+
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
   return (
     <div className="min-h-screen relative overflow-hidden">
       <Navbar />
-      <PawCursor />
       <DoodleIcons />
 
       <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-24 pb-16 px-4">
@@ -67,17 +147,6 @@ export function Home() {
           <Button variant="outline" size="lg" asChild>
             <Link to="/cart">View Cart</Link>
           </Button>
-        </div>
-
-        <div className="relative w-full max-w-5xl reveal-up">
-          <StickerBadge className="absolute -top-12 -left-4">New Episode</StickerBadge>
-          <div className="relative w-full h-72 bg-white rounded-3xl overflow-hidden border-4 border-navy shadow-2xl flex items-center justify-center">
-            <BrunoImage variant="happy" className="w-64 h-64 object-cover bob" />
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-navy text-white p-6 text-center">
-            <span className="font-heading text-xl">Bruno's Morning</span>
-            <p className="text-sm mt-1 opacity-90">Calm episode: lavender &amp; chamomile</p>
-          </div>
         </div>
       </section>
 
@@ -122,31 +191,33 @@ export function Home() {
       <section className="py-24 px-4 bg-lavender/30">
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="Bruno's Day" subtitle="Follow Bruno through his daily scent adventures." />
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="relative group reveal-up">
-              <div className="w-full h-64 bg-white rounded-3xl overflow-hidden border-4 border-navy shadow-xl flex items-center justify-center">
-                <BrunoImage variant="door" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <div className="relative" ref={storyRef}>
+            {scenes.map((scene, i) => (
+              <div
+                key={scene.title}
+                ref={chapterRefs[i]}
+                className={`chapter absolute inset-0 z-10 flex items-center justify-center px-8 opacity-0 transition-opacity duration-300 ${
+                  i === 0 ? 'opacity-1' : ''
+                }`}
+              >
+                <div className="flex items-center gap-10 w-full max-w-[900px]">
+                  <div className="relative w-[320px] h-[320px] shrink-0 overflow-hidden rounded-3xl border-4 border-navy shadow-2xl bg-white">
+                    <BrunoImage
+                      variant={scene.variant}
+                      ref={brunoRefs[i]}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="text-blurb" ref={textRefs[i]}>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur border border-golden mb-4">
+                      <span className="text-[10px] font-bold text-golden uppercase tracking-wider">{scene.time}</span>
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-heading text-navy leading-tight mb-3">{scene.title}</h2>
+                    <p className="text-lg text-navy/80 font-body">{scene.text}</p>
+                  </div>
+                </div>
               </div>
-              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full border-2 border-golden">
-                <span className="font-heading text-lg text-navy">Morning walk</span>
-              </div>
-            </div>
-            <div className="relative group reveal-up" style={{ animationDelay: '0.1s' }}>
-              <div className="w-full h-64 bg-white rounded-3xl overflow-hidden border-4 border-navy shadow-xl flex items-center justify-center">
-                <BrunoImage variant="jump" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full border-2 border-golden">
-                <span className="font-heading text-lg text-navy">Play time</span>
-              </div>
-            </div>
-            <div className="relative group reveal-up" style={{ animationDelay: '0.2s' }}>
-              <div className="w-full h-64 bg-white rounded-3xl overflow-hidden border-4 border-navy shadow-xl flex items-center justify-center">
-                <BrunoImage variant="sleep" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full border-2 border-golden">
-                <span className="font-heading text-lg text-navy">Nap time</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

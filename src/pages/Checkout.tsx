@@ -52,7 +52,7 @@ export function CheckoutPage() {
 
         {paymentStage === 'entry' && (
           <>
-            <div className="bg-white rounded-3xl p-8 border-4 border-nagy shadow-xl mb-10">
+            <div className="bg-white rounded-3xl p-8 border-4 border-navy shadow-xl mb-10">
               <h2 className="text-2xl font-heading text-navy mb-6">Order Summary</h2>
               <div className="space-y-4">
                 {items.map((item) => (
@@ -61,14 +61,14 @@ export function CheckoutPage() {
                     <span>₹{item.price * item.quantity}</span>
                   </div>
                 ))}
-                <div className="mt-6 pt-4 border-t-2 border-nagy/30 flex justify-between font-heading text-xl text-navy">
+                <div className="mt-6 pt-4 border-t-2 border-navy/30 flex justify-between font-heading text-xl text-navy">
                   <span>Total</span>
                   <span>₹{total}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-8 border-4 border-nagy shadow-xl">
+            <div className="bg-white rounded-3xl p-8 border-4 border-navy shadow-xl">
               <h2 className="text-2xl font-heading text-navy mb-6">Demo Payment</h2>
               <p className="text-navy/70 font-body mb-6 text-sm">
                 This is a demo payment. No card numbers are requested. Complete the animation to place your order.
@@ -79,7 +79,7 @@ export function CheckoutPage() {
                   <input
                     type="text"
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-nagy/30 focus:border-golden focus:outline-none font-body text-navy"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-navy/30 focus:border-golden focus:outline-none font-body text-navy"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
@@ -89,7 +89,7 @@ export function CheckoutPage() {
                   <input
                     type="email"
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-nagy/30 focus:border-golden focus:outline-none font-body text-navy"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-navy/30 focus:border-golden focus:outline-none font-body text-navy"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
@@ -99,12 +99,12 @@ export function CheckoutPage() {
                   <textarea
                     required
                     rows={3}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-nagy/30 focus:border-golden focus:outline-none font-body text-navy"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-navy/30 focus:border-golden focus:outline-none font-body text-navy"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   />
                 </div>
-                <div className="pt-4 border-t-2 border-nagy/20">
+                <div className="pt-4 border-t-2 border-navy/20">
                   <p className="text-xs text-navy/60 mb-4 font-body">
                     Demo mode: clicking "Pay" plays a completion animation. No real payment is processed.
                   </p>

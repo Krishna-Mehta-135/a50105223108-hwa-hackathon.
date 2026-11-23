@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FFF8EC;
+  --color-butter: #FFD66B;
+  --color-golden: #F2A93B;
+  --color-sky: #BFE3F2;
+  --color-lavender: #D9CCF5;
+  --color-mint: #C8EBD9;
+  --color-navy: #1F2A44;
+
+  --font-heading: "Lilita One", cursive;
+  --font-body: "Nunito", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-navy font-body antialiased;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-heading text-navy;
+}
+
+.button-shadow {
+  box-shadow: 4px 4px 0 #1F2A44;
+}
+
+.button-shadow:active {
+  box-shadow: 2px 2px 0 #1F2A44;
+  transform: translate(2px, 2px);
+}
+
+.sticker-badge {
+  transform: rotate(-4deg);
+}
+
+.sticker-badge.tilt-pos {
+  transform: rotate(6deg);
+}
+
+.paw-cursor {
+  width: 24px;
+  height: 24px;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.blob-shape {
+  position: absolute;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: blob-move 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes blob-move {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 30px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+.doodle-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.heading-reveal-word {
+  opacity: 0;
+  animation: word-reveal 0.8s ease-out forwards;
+}
+
+@keyframes word-reveal {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .blob-shape { animation: none; }
+  .doodle-float { animation: none; }
+  .heading-reveal-word { opacity: 1; transform: none; }
+}

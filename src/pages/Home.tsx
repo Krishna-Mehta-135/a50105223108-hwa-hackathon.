@@ -11,7 +11,6 @@ import { SectionHeader } from '../components/SectionHeader';
 import { BlobShape } from '../components/BlobShape';
 import { WavyDivider } from '../components/WavyDivider';
 import { StickerBadge } from '../components/StickerBadge';
-
 gsap.registerPlugin(ScrollTrigger);
 
 const scenes = [
@@ -160,7 +159,7 @@ export function Home() {
               <div className="relative z-10 w-full h-[450px] object-cover rounded-3xl border-4 border-navy shadow-xl flex items-center justify-center reveal-up">
                 <BrunoImage variant="sniff" className="w-full h-full object-cover" />
               </div>
-              <StickerBadge className="absolute -bottom-6 -right-6">Sniff Time</StickerBadge>
+              <StickerBadge className="absolute -bottom-6 -right-6 z-20">Sniff Time</StickerBadge>
             </div>
             <div className="lg:w-1/2">
               <SectionHeader
@@ -191,7 +190,7 @@ export function Home() {
       <section className="py-24 px-4 bg-lavender/30">
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="Bruno's Day" subtitle="Follow Bruno through his daily scent adventures." />
-          <div className="relative" ref={storyRef}>
+          <div className="relative h-[600vh]" ref={storyRef}>
             {scenes.map((scene, i) => (
               <div
                 key={scene.title}
